@@ -1,5 +1,6 @@
 package com.ryder.springmall.controller;
 
+import com.ryder.springmall.constant.ProductCategory;
 import com.ryder.springmall.dto.ProductRequest;
 import com.ryder.springmall.model.Product;
 import com.ryder.springmall.service.ProductService;
@@ -18,8 +19,11 @@ public class ProdcutController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(){
-        List<Product> productList = productService.getProducts();
+    public ResponseEntity<List<Product>> getProducts(
+            @RequestParam(required = false) ProductCategory productCategory,
+            @RequestParam(required = false) String search
+            ){
+        List<Product> productList = productService.getProducts(productCategory,search);
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 
