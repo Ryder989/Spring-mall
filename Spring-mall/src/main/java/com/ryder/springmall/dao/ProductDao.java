@@ -1,6 +1,7 @@
 package com.ryder.springmall.dao;
 
 import com.ryder.springmall.constant.ProductCategory;
+import com.ryder.springmall.dto.ProductQueryParams;
 import com.ryder.springmall.dto.ProductRequest;
 import com.ryder.springmall.model.Product;
 
@@ -8,7 +9,7 @@ import java.util.List;
 
 public interface ProductDao {
 
-    List<Product> getProducts(ProductCategory productCategory,String search);
+    List<Product> getProducts(ProductQueryParams productQueryParams);
 
     Product getProductById(Integer productId);
 

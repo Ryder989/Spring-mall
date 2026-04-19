@@ -1,6 +1,7 @@
 package com.ryder.springmall.controller;
 
 import com.ryder.springmall.constant.ProductCategory;
+import com.ryder.springmall.dto.ProductQueryParams;
 import com.ryder.springmall.dto.ProductRequest;
 import com.ryder.springmall.model.Product;
 import com.ryder.springmall.service.ProductService;
@@ -23,7 +24,11 @@ public class ProdcutController {
             @RequestParam(required = false) ProductCategory productCategory,
             @RequestParam(required = false) String search
             ){
-        List<Product> productList = productService.getProducts(productCategory,search);
+        ProductQueryParams productQueryParams = new ProductQueryParams();
+        productQueryParams.setProductCategory(productCategory);
+        productQueryParams.setSearch(search);
+
+        List<Product> productList = productService.getProducts(productQueryParams);
         return ResponseEntity.status(HttpStatus.OK).body(productList);
     }
 

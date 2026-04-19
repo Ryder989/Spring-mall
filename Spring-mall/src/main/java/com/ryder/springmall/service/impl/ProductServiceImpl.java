@@ -1,7 +1,7 @@
 package com.ryder.springmall.service.impl;
 
-import com.ryder.springmall.constant.ProductCategory;
 import com.ryder.springmall.dao.ProductDao;
+import com.ryder.springmall.dto.ProductQueryParams;
 import com.ryder.springmall.dto.ProductRequest;
 import com.ryder.springmall.model.Product;
 import com.ryder.springmall.service.ProductService;
@@ -17,8 +17,8 @@ public class ProductServiceImpl implements ProductService {
     private ProductDao productDao;
 
     @Override
-    public List<Product> getProducts(ProductCategory productCategory,String search) {
-        return productDao.getProducts(productCategory,search);
+    public List<Product> getProducts(ProductQueryParams productQueryParams) {
+        return productDao.getProducts(productQueryParams);
     }
 
     @Override
