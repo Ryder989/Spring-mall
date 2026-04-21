@@ -5,6 +5,7 @@ import com.ryder.springmall.dto.ProductQueryParams;
 import com.ryder.springmall.dto.ProductRequest;
 import com.ryder.springmall.model.Product;
 import com.ryder.springmall.service.ProductService;
+import com.ryder.springmall.util.Page;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
@@ -24,7 +25,7 @@ public class ProdcutController {
     private ProductService productService;
 
     @GetMapping("/products")
-    public ResponseEntity<List<Product>> getProducts(
+    public ResponseEntity<Page<Product>> getProducts(
             // 查詢條件 Filtering
             @RequestParam(required = false) ProductCategory productCategory,
             @RequestParam(required = false) String search,
@@ -45,8 +46,19 @@ public class ProdcutController {
         productQueryParams.setLimit(limit);
         productQueryParams.setOffset(offset);
 
+        // 取得 productList
         List<Product> productList = productService.getProducts(productQueryParams);
-        return ResponseEntity.status(HttpStatus.OK).body(productList);
+
+        // 取得 product總數
+        Integer total = productService.countProduct(productQueryParams);
+
+        // 分頁
+        Page<Product> page = new Page<>();
+        page.setLimit(limit);
+        page.setOffset(offset);
+        page.setTotal(total);
+        page.setResult(productList);
+        return ResponseEntity.status(HttpStatus.OK).body(page);
     }
 
 
