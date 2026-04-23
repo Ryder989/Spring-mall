@@ -1,5 +1,6 @@
 package com.ryder.springmall.controller;
 
+import com.ryder.springmall.dto.UserLoginRequest;
 import com.ryder.springmall.dto.UserRegisterRequest;
 import com.ryder.springmall.model.User;
 import com.ryder.springmall.service.UserService;
@@ -23,5 +24,12 @@ public class UserController {
         User user = userService.getUserById(user_id);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(user);
+    }
+
+    @PostMapping("/users/login")
+    public ResponseEntity<User> login(@RequestBody @Valid UserLoginRequest userLoginRequest){
+        User user = userService.login(userLoginRequest);
+
+        return ResponseEntity.status(HttpStatus.OK).body(user);
     }
 }

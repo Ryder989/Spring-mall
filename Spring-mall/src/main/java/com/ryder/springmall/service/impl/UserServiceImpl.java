@@ -1,6 +1,7 @@
 package com.ryder.springmall.service.impl;
 
 import com.ryder.springmall.dao.UserDao;
+import com.ryder.springmall.dto.UserLoginRequest;
 import com.ryder.springmall.dto.UserRegisterRequest;
 import com.ryder.springmall.model.User;
 import com.ryder.springmall.service.UserService;
@@ -35,5 +36,21 @@ public class UserServiceImpl implements UserService {
     @Override
     public User getUserById(Integer user_Id) {
         return userDao.getUserById(user_Id);
+    }
+
+    @Override
+    public User login(UserLoginRequest userLoginRequest) {
+        User user = userDao.getUserByEmail(userLoginRequest.getEmail());
+
+        if (user == null){
+            log.warn("該 email {} 尚未註冊",userLoginRequest.getEmail());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
+        if (user.getPassword().equals(userLoginRequest.getPassword())){
+            return user;
+        }else {
+            log.warn("email {} 的密碼不正確",userLoginRequest.getPassword());
+            throw new ResponseStatusException(HttpStatus.BAD_REQUEST);
+        }
     }
 }
