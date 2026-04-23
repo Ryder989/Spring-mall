@@ -1,9 +1,11 @@
 package com.ryder.springmall.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 
 public class UserRegisterRequest {
 
+    @Email
     @NotBlank
     private String email;
     @NotBlank
