@@ -1,5 +1,6 @@
 package com.ryder.springmall.dao;
 
+import com.ryder.springmall.dto.OrderQueryParams;
 import com.ryder.springmall.model.Order;
 import com.ryder.springmall.model.OrderItem;
 
@@ -13,5 +14,9 @@ public interface OrderDao {
     Order getOrderById(Integer orderId);
 
     List<OrderItem> getOrderItemsByOrderId(Integer orderId);
+
+    Integer countOrder(OrderQueryParams orderQueryParams);
+
+    List<Order> getOrders(OrderQueryParams orderQueryParams);
 
 }

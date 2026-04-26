@@ -5,6 +5,7 @@ import com.ryder.springmall.dao.ProductDao;
 import com.ryder.springmall.dao.UserDao;
 import com.ryder.springmall.dto.BuyItem;
 import com.ryder.springmall.dto.CreateOrderRequest;
+import com.ryder.springmall.dto.OrderQueryParams;
 import com.ryder.springmall.model.Order;
 import com.ryder.springmall.model.OrderItem;
 import com.ryder.springmall.model.Product;
@@ -91,5 +92,22 @@ public class OrderServiceImpl implements OrderService {
         order.setOrderItemList(orderItemList);
 
         return order;
+    }
+
+    @Override
+    public List<Order> getOrders(OrderQueryParams orderQueryParams) {
+        List<Order> orderList = orderDao.getOrders(orderQueryParams);
+
+        for (Order order : orderList){
+            List<OrderItem> orderItemList = orderDao.getOrderItemsByOrderId(order.getOrder_id());
+
+            order.setOrderItemList(orderItemList);
+        }
+        return orderList;
+    }
+
+    @Override
+    public Integer countOrder(OrderQueryParams orderQueryParams) {
+        return orderDao.countOrder(orderQueryParams);
     }
 }
